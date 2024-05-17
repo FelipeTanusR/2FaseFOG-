@@ -8,6 +8,7 @@ using UnityEngine;
 public class Movimento : MonoBehaviour
 {
     [SerializeField] private float Velocidade;
+    
     [SerializeField] private Transform PeDoPersonagem;
     [SerializeField] private LayerMask Chao;
     
@@ -16,6 +17,7 @@ public class Movimento : MonoBehaviour
     [SerializeField] private Rigidbody2D Corpo;
     //Para ele não pular infinitamente
     private bool PodePular = false;
+    private bool PuloDuplo = true;
     [SerializeField] private float ForcaPulo;
 
     void Update()
@@ -37,20 +39,47 @@ public class Movimento : MonoBehaviour
         //Se o acerto tem um resultado não nulo, pode pular
         if(PertoDoChao)
         {
+            PuloDuplo = true;
             PodePular = true;
         }
         else //Caso contrário, não se pode pular
         {
+            
             PodePular = false;
+            
+            
         }
 
         //Se a barra de espaço foi pressionada e o jogador pode pular
-        if (Input.GetKeyDown(KeyCode.Space) && PodePular)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && PodePular)
         {
             //Adiciona uma força para cima proporcional à ForçaPulo
-            Corpo.AddForce(Vector2.up * ForcaPulo);
+            Corpo.AddForce(Vector2.up * (ForcaPulo));
             //Proíbe o jogador de pular
             PodePular = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !PertoDoChao)
+        {
+
+            if(PuloDuplo){
+                //Adiciona uma força para cima proporcional à ForçaPulo
+                Corpo.AddForce(Vector2.up * (ForcaPulo));
+                //Proíbe o jogador de pular novamente no ar
+                PuloDuplo = false;
+            }
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift)){
+            Velocidade *= 1.6f;
+            movimento_horizontal = Velocidade * Input.GetAxisRaw("Horizontal");
+            Corpo.velocity = new Vector2(movimento_horizontal, Corpo.velocity.y);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift)){
+            Velocidade *= 0.625f;
+            movimento_horizontal = Velocidade * Input.GetAxisRaw("Horizontal");
+            Corpo.velocity = new Vector2(movimento_horizontal, Corpo.velocity.y);
         }
     }
 }

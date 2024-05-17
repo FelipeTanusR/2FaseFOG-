@@ -9,8 +9,8 @@ public class FlechaController : MonoBehaviour
 
     void Update()
     {
-        //Move a flecha na direção à sua direita
-        //O Time.deltaTime faz a velocidade adaptar à taxa de fps do jogo,
+        //Move a flecha na direï¿½ï¿½o ï¿½ sua direita
+        //O Time.deltaTime faz a velocidade adaptar ï¿½ taxa de fps do jogo,
         //assim mantendo a velocidade constante em computadores de desempenho diferentes
         transform.transform.position += transform.right * Velocidade * Time.deltaTime;
     }
@@ -18,18 +18,22 @@ public class FlechaController : MonoBehaviour
     //Ao colidir
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Verifica se colidiu com o jogador
-        if (collision.collider.tag == "Player")
-        {
-            //Se sim, avisa o controlador do jogo que ele morreu
-            GameObject.FindGameObjectWithTag("Controlador").GetComponent<ControladorDoJogo>().Morreu();
+        //verifica se o objeto possui o atributo "vida"
+        if(collision.gameObject.TryGetComponent<Vida>(out var Vida)){
+
+            //cause dano
+            Vida.Dano(20);
+            OnBecameInvisible();
+
         }
+        
+        
     }
 
-    //Ao sair do campo de visão de todas as câmeras
+    //Ao sair do campo de visï¿½o de todas as cï¿½meras
     private void OnBecameInvisible()
     {
-        //Destrói a flecha
+        //Destrï¿½i a flecha
         Destroy(this.gameObject);
     }
 }
