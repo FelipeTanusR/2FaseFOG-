@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7abf08d8ffbadd44aa1b1c16cdabf2a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Canvas: {fileID: 0}
 --- !u!1 &242281129
 GameObject:
   m_ObjectHideFlags: 0
@@ -2131,7 +2132,6 @@ GameObject:
   - component: {fileID: 1422333708}
   - component: {fileID: 1422333710}
   - component: {fileID: 1422333711}
-  - component: {fileID: 1422333712}
   m_Layer: 0
   m_Name: Jogador
   m_TagString: Player
@@ -2297,7 +2297,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   Corpo: {fileID: 1422333709}
-  ForcaPulo: 500
+  ForcaPulo: 400
+  ForcaDash: 500
 --- !u!114 &1422333711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2345,6 +2346,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+      - m_Target: {fileID: 2051880076}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 1
       - m_Target: {fileID: 11500000, guid: 7abf08d8ffbadd44aa1b1c16cdabf2a7, type: 3}
         m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
         m_MethodName: set_name
@@ -2354,21 +2367,9 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
---- !u!114 &1422333712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422333705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7abf08d8ffbadd44aa1b1c16cdabf2a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+          m_StringArgument: Morreu
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1448686842
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,8 +17,11 @@ public class Movimento : MonoBehaviour
     [SerializeField] private Rigidbody2D Corpo;
     //Para ele não pular infinitamente
     private bool PodePular = false;
-    private bool PuloDuplo = true;
+    private bool PuloDuplo = false;
+    private bool Dash = false;
     [SerializeField] private float ForcaPulo;
+
+    [SerializeField] private float ForcaDash;
 
     void Update()
     {
@@ -41,6 +44,7 @@ public class Movimento : MonoBehaviour
         {
             PuloDuplo = true;
             PodePular = true;
+            Dash = true;
         }
         else //Caso contrário, não se pode pular
         {
@@ -71,6 +75,7 @@ public class Movimento : MonoBehaviour
             
         }
 
+        //Modifica a velocidade do jogador quando ele aperta e solta o botao de correr
         if (Input.GetKeyDown(KeyCode.LeftShift)){
             Velocidade *= 1.6f;
             movimento_horizontal = Velocidade * Input.GetAxisRaw("Horizontal");
@@ -81,5 +86,39 @@ public class Movimento : MonoBehaviour
             movimento_horizontal = Velocidade * Input.GetAxisRaw("Horizontal");
             Corpo.velocity = new Vector2(movimento_horizontal, Corpo.velocity.y);
         }
+
+        //impulsiona o jogador para o lado que ele esta andando
+        //esquerda
+        if (Input.GetKey(KeyCode.LeftArrow)&&Dash){
+
+            if(Input.GetKeyDown(KeyCode.Space)){
+
+                if(!PertoDoChao){
+                    Dash = false;
+                }
+                StartCoroutine(FDash(-1f));          
+            }
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow)&&Dash){
+
+            if(Input.GetKeyDown(KeyCode.Space)){
+
+                if(!PertoDoChao){
+                    Dash = false;
+                }
+                StartCoroutine(FDash(-1f));            
+            }
+        }
+
+    }
+
+    IEnumerator FDash (float direction){
+        Corpo.velocity = new Vector2(Corpo.velocity.x,0f);
+        Corpo.AddForce(new Vector2(ForcaDash*direction,0f),ForceMode2D.Impulse);
+        float gravity = Corpo.gravityScale;
+        Corpo.gravityScale = 0;
+        yield return new WaitForSeconds(0.6f);
+        Corpo.gravityScale = gravity;
     }
 }

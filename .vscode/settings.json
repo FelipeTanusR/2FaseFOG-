@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Base_PSEL.sln"
+    "dotnet.defaultSolution": "2FaseFOG.sln"
 }
