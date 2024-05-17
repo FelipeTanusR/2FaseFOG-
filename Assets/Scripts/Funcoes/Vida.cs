@@ -16,7 +16,7 @@ public class Vida : MonoBehaviour
     public UnityEvent<int> atacado;
     public UnityEvent morto;
 
-    public int hp {
+    public int Hp {
         get => _Hp;
         private set
             {
@@ -29,7 +29,7 @@ public class Vida : MonoBehaviour
                     curado?.Invoke(_Hp);
                 }
 
-                if(_Hp <= 0){
+                if(Hp <= 0){
                     morto?.Invoke();
                 }
             }
@@ -39,7 +39,7 @@ public class Vida : MonoBehaviour
 
     void Awake()
     {
-        _Hp=_maxHp;
+        _Hp = _maxHp;
     }
 
 
@@ -54,6 +54,9 @@ public class Vida : MonoBehaviour
     public void Ajuste(int quantidade) =>_Hp = quantidade;
 
     
-    
-    
+    void Update(){
+        if(_Hp<=0){
+            morto?.Invoke();
+        }
+    }    
 }

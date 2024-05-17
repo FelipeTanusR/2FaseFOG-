@@ -19,12 +19,12 @@ public class AtiradorController : MonoBehaviour
 
     void Update()
     {
-        //Se o tempo é maior que o tempo do último tiro + o intervalo
+        //Se o tempo ï¿½ maior que o tempo do ï¿½ltimo tiro + o intervalo
         if(Time.time >= Intervalo + UltimoTiro)
         {
-            //Cria uma rotação
+            //Cria uma rotaï¿½ï¿½o
             Quaternion rotacao = new Quaternion();
-            //Define a rotação em função de graus (º)
+            //Define a rotaï¿½ï¿½o em funï¿½ï¿½o de graus (ï¿½)
             rotacao.eulerAngles = new Vector3(0, 0, 90);
 
             //Instancia a flecha apontando pra cima
