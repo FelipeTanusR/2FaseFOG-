@@ -3,10 +3,13 @@ using UnityEngine.Events;
 
 public class Vida : MonoBehaviour
 {
-    [SerializeField] private int _maxHp = 100;
+    [SerializeField] public int _maxHp = 100;
     
     
     [SerializeField] private int _Hp;
+
+    private bool tomouDano = false;
+    private bool curou = false;
 
 
     
@@ -15,28 +18,17 @@ public class Vida : MonoBehaviour
     public UnityEvent<int> curado;
     public UnityEvent<int> atacado;
     public UnityEvent morto;
-
-    public int Hp {
-        get => _Hp;
-        private set
-            {
-                var tomouDano = value < _Hp;
-                _Hp = Mathf.Clamp(value,0,_maxHp);
-
-                if(tomouDano){
-                    atacado?.Invoke(_Hp);
-                }else{
-                    curado?.Invoke(_Hp);
-                }
-
-                if(Hp <= 0){
-                    morto?.Invoke();
-                }
-            }
-
-    }
     
+    
+    public void setTomouDano(bool status){
+        tomouDano = status;
+    }
+    public void setCurou(bool status){
+        curou = status;
+    }
 
+    
+    
     void Awake()
     {
         _Hp = _maxHp;
@@ -55,6 +47,15 @@ public class Vida : MonoBehaviour
 
     
     void Update(){
+        if(tomouDano){
+            tomouDano = false;
+            atacado?.Invoke(_Hp);
+
+        }
+        if(curou){
+            curou = false;
+            curado?.Invoke(_Hp);
+        }
         if(_Hp<=0){
             morto?.Invoke();
         }

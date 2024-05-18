@@ -22,6 +22,7 @@ public class FlechaController : MonoBehaviour
         if(collision.gameObject.TryGetComponent<Vida>(out var Vida)){
 
             //cause dano
+            Vida.setTomouDano(true);
             Vida.Dano(20);
             OnBecameInvisible();
 
