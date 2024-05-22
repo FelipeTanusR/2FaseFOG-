@@ -9,6 +9,10 @@ Funções implementadas
 
 
 2 Pontos
+-Dash Direcional
 
 3 Pontos
 -Sistema de vida com a possibilidade de levar dano
+
+4 Pontos
+-Wall Jump
