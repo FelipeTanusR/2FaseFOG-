@@ -232,4 +232,8 @@ public class Movimento : MonoBehaviour
             transform.localScale = localScale;
         }
     }
+
+    public Boolean FacingRight(){
+        return isFacingRight;
+    }
 }

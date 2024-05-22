@@ -28,7 +28,7 @@ public class AtiradorController : MonoBehaviour
             rotacao.eulerAngles = new Vector3(0, 0, 90);
 
             //Instancia a flecha apontando pra cima
-            Instantiate(FlechaPrefab, transform.position, rotacao);
+            Instantiate(FlechaPrefab, transform.position + transform.up, rotacao);
 
             //Salva o momento do tiro
             UltimoTiro = Time.time;
