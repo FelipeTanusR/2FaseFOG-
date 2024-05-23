@@ -14,6 +14,8 @@ Funções implementadas
 
 3 Pontos
 -Sistema de vida com a possibilidade de levar dano
+-Inimigo complexo (Mira, atira e anda)
 
 4 Pontos
 -Wall Jump
+-Salvar pontuação
