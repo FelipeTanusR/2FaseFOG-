@@ -7,13 +7,15 @@ using UnityEngine;
 
 public class Movimento : MonoBehaviour
 {
+
+    //atributos base
     [SerializeField] private float ForcaPulo;
     private float horizontal;
     private float Velocidade = 10f;
     private float TempVelocidade = 1.5f;
     private bool isRunning = false;
-   
     private bool isFacingRight = true;
+
 
     [Header("Pulo")]
     private bool PodePular = true;
@@ -41,6 +43,8 @@ public class Movimento : MonoBehaviour
     private float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new Vector2(8f, 12f);
 
+
+    //atributos de fisica
     [SerializeField] private Rigidbody2D Corpo;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -50,47 +54,48 @@ public class Movimento : MonoBehaviour
 
 
     public void Start(){
+        //inicia o componente do trail do dash
         TR = GetComponent<TrailRenderer>();
     }
 
     
-    private void Update()
-    {
-
+    private void Update(){
+        //impede acoes de movimentacao caso o player esteja no meio de um dash
         if(isDashing){
             return;
         }
 
+        //define velocidade caso esteja ou nao correndo
         horizontal = Input.GetAxisRaw("Horizontal");
         
         if(isRunning){
             horizontal = Input.GetAxisRaw("Horizontal") * TempVelocidade;
         }
 
-
-        if(IsGrounded())
-        {
+        //reseta as acoes que so podem ser utilzadas uma vez no ar
+        if(IsGrounded()){
             PuloDuplo = true;
             PodePular = true;
             PodeDash = true;
             
         }
-        else //Caso contrário, não se pode pular
-        {        
+        //Caso contrário, não se pode pular  
+        else{       
             PodePular = false;  
         }
 
 
-        if (Input.GetButtonDown("Jump")&& PodePular)
-        {
+        //Pulo
+        if (Input.GetButtonDown("Jump")&& PodePular){
             //Adiciona uma força para cima proporcional à ForçaPulo
             Corpo.velocity = new Vector2(Corpo.velocity.x, ForcaPulo);
             //Proíbe o jogador de pular
             PodePular = false;
         }
 
-        if (Input.GetButtonDown("Jump") && !IsGrounded() && !isWallSliding)
-        {
+
+        //Pulo Duplo
+        if (Input.GetButtonDown("Jump") && !IsGrounded() && !isWallSliding){
 
             if(PuloDuplo){
                 //Adiciona uma força para cima proporcional à ForçaPulo
@@ -101,45 +106,39 @@ public class Movimento : MonoBehaviour
             
         }
         
-         //Modifica a velocidade do jogador quando ele aperta e solta o botao de correr
+        //Ativa e desativa o status de correndo
         if (Input.GetButtonDown("Run")&& !isRunning){ 
-            isRunning = true;
-            
+            isRunning = true; 
         }
         if (Input.GetButtonUp("Run")){
-            isRunning = false;
-            
+            isRunning = false;  
         }
 
-
-         if(Input.GetButtonDown("Dash")&&PodeDash){
-
+        //Inicia a funcao de dash
+        if(Input.GetButtonDown("Dash")&&PodeDash){
             StartCoroutine(Dash());
-         }
+        }
 
-       
-
-        
+        //Chama as verificacoes de Wall Slide e Jump
         WallSlide();
         WallJump();
 
-        if (!isWallJumping)
-        {
+        //chama a funcao de rotacionar o boneco
+        if (!isWallJumping){
             Flip();
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (!isWallJumping)
-        {
+        
+    private void FixedUpdate(){
+        if (!isWallJumping){
             Corpo.velocity = new Vector2(horizontal * Velocidade, Corpo.velocity.y);
         }
     }
 
 
-    private IEnumerator Dash()
-    {
+    //rotina de dash
+    private IEnumerator Dash(){
         PodeDash = false;
         isDashing = true;
         float originalGravity = Corpo.gravityScale;
@@ -161,52 +160,45 @@ public class Movimento : MonoBehaviour
     }
 
 
-    private bool IsGrounded()
-    {
+    //verificacoes de fisica
+    private bool IsGrounded(){
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
-    private bool IsWalled()
-    {
+    private bool IsWalled(){
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
     }
 
-    private void WallSlide()
-    {
-        if (IsWalled() && !IsGrounded() && horizontal != 0f)
-        {
+    //aleracao de velocidade no wallslide
+    private void WallSlide(){
+        if (IsWalled() && !IsGrounded() && horizontal != 0f){
             isWallSliding = true;
             Corpo.velocity = new Vector2(Corpo.velocity.x, Mathf.Clamp(Corpo.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
-        else
-        {
+        else{
             isWallSliding = false;
         }
     }
 
-    private void WallJump()
-    {
-        if (isWallSliding)
-        {
+    //rotina de Wall Jump
+    private void WallJump(){
+        if (isWallSliding){
             isWallJumping = false;
             wallJumpingDirection = -transform.localScale.x;
             wallJumpingCounter = wallJumpingTime;
 
             CancelInvoke(nameof(StopWallJumping));
         }
-        else
-        {
+        else{
             wallJumpingCounter -= Time.deltaTime;
         }
 
-        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
-        {
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f){
             isWallJumping = true;
             Corpo.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
 
-            if (transform.localScale.x != wallJumpingDirection)
-            {
+            if (transform.localScale.x != wallJumpingDirection){
                 isFacingRight = !isFacingRight;
                 Vector3 localScale = transform.localScale;
                 localScale.x *= -1f;
@@ -217,15 +209,14 @@ public class Movimento : MonoBehaviour
         }
     }
 
-    private void StopWallJumping()
-    {
+    //Para o Wall Jumping
+    private void StopWallJumping(){
         isWallJumping = false;
     }
 
-    private void Flip()
-    {
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
-        {
+    //Corige a posicao do boneco com base na velocidade
+    private void Flip(){
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f){
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
@@ -233,6 +224,7 @@ public class Movimento : MonoBehaviour
         }
     }
 
+    //retorna o lado que o boneco esta olhando
     public Boolean FacingRight(){
         return isFacingRight;
     }

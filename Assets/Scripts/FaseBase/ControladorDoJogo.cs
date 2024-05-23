@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ControladorDoJogo : MonoBehaviour
 {
     //Pega o Canvas da UI de morte
     [SerializeField] GameObject Canvas;
+    [SerializeField]
+
 
     public void Morreu()
     {
@@ -14,4 +17,6 @@ public class ControladorDoJogo : MonoBehaviour
 
         Time.timeScale = 0.0f;
     }
+
+   
 }

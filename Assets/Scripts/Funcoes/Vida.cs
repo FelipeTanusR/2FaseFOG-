@@ -3,11 +3,11 @@ using UnityEngine.Events;
 
 public class Vida : MonoBehaviour
 {
+    //Informações da entidade
     [SerializeField] public int _maxHp = 100;
-    
-    
     [SerializeField] private int _Hp;
 
+    //Bools para triggers
     private bool tomouDano = false;
     private bool curou = false;
 
@@ -15,11 +15,13 @@ public class Vida : MonoBehaviour
     
     public int VidaMaxima => _maxHp;
 
+    //eventos para indentificar status
     public UnityEvent<int> curado;
     public UnityEvent<int> atacado;
     public UnityEvent morto;
     
     
+    //atualiza as bools
     public void setTomouDano(bool status){
         tomouDano = status;
     }
@@ -29,12 +31,12 @@ public class Vida : MonoBehaviour
 
     
     
-    void Awake()
-    {
+    void Start(){
         _Hp = _maxHp;
     }
 
 
+    //funcoes de manipulacao de vida
     public void Dano(int quantidade) =>_Hp -= quantidade;
 
     public void Cura(int quantidade) =>_Hp += quantidade;
@@ -46,6 +48,7 @@ public class Vida : MonoBehaviour
     public void Ajuste(int quantidade) =>_Hp = quantidade;
 
     
+    //verifica qual status invocar com base na mudanca da vida
     void Update(){
         if(tomouDano){
             tomouDano = false;

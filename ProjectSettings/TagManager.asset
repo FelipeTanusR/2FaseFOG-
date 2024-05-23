@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plataforma
   - Controlador
+  - Inimigo
   layers:
   - Default
   - TransparentFX
