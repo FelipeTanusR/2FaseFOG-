@@ -10,6 +10,7 @@ Funções implementadas
 
 2 Pontos
 -Dash Direcional
+-Personagem atirar
 
 3 Pontos
 -Sistema de vida com a possibilidade de levar dano
