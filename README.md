@@ -6,7 +6,7 @@ Funções implementadas
 -Pulo duplo (que só recarrega ao encostar no chão)
 -Botão de correr
 -Botão no chão (Plataforma que te lança para cima)
-- Mecânicas para trocar de arma
+-Mecânicas para trocar de arma
 
 
 
