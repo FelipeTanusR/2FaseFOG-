@@ -11,6 +11,7 @@ public class InimigoSegue : MonoBehaviour
     [SerializeField]public float DistanciaTiro;
 
 
+
     //variaveis para movimentar
     [SerializeField] Rigidbody2D corpo;
     private bool isFacingRight;
@@ -24,6 +25,8 @@ public class InimigoSegue : MonoBehaviour
     [SerializeField] public Rigidbody2D Imune;
     //Prefab para criar
     [SerializeField] private Rigidbody2D FlechaPrefab;
+    [SerializeField] public AudioClip SomTiro;
+
     
     private Rigidbody2D tiro;
     
@@ -104,6 +107,9 @@ public class InimigoSegue : MonoBehaviour
 
                 //Salva o momento do tiro
                 UltimoTiro = Time.time;
+
+                AudioSource.PlayClipAtPoint(SomTiro, transform.position);
+
 
             }
         }

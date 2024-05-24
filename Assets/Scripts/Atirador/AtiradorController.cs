@@ -31,6 +31,8 @@ public class AtiradorController : MonoBehaviour
             //Salva o momento do tiro
             UltimoTiro = Time.time;
 
+
+
         }
     }
 

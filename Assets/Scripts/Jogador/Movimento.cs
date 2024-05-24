@@ -11,11 +11,14 @@ public class Movimento : MonoBehaviour
 
     //atributos base
     [SerializeField] private float ForcaPulo;
+    [SerializeField] private AudioClip SomDash;
+
     private float horizontal;
     private float Velocidade = 10f;
     private float TempVelocidade = 1.5f;
     private bool isRunning = false;
     private bool isFacingRight = true;
+
 
 
     [Header("Pulo")]
@@ -118,6 +121,8 @@ public class Movimento : MonoBehaviour
         //Inicia a funcao de dash
         if(Input.GetButtonDown("Dash")&&PodeDash){
             StartCoroutine(Dash());
+                AudioSource.PlayClipAtPoint(SomDash, transform.position);
+
         }
 
         //Chama as verificacoes de Wall Slide e Jump
@@ -166,7 +171,7 @@ public class Movimento : MonoBehaviour
 
     //verificacoes de fisica
     private bool IsGrounded(){
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, 1f, groundLayer);
     }
 
     private bool IsWalled(){
@@ -237,5 +242,6 @@ public class Movimento : MonoBehaviour
         return Corpo;
     }
     
+
     
 }

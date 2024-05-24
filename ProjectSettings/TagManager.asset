@@ -8,6 +8,8 @@ TagManager:
   - Controlador
   - Inimigo
   - CameraPlayer
+  - PotVida
+  - Estrela
   layers:
   - Default
   - TransparentFX
