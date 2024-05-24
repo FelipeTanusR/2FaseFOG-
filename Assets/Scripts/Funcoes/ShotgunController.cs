@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlechaController : MonoBehaviour
+public class ShotgunController : MonoBehaviour
 {
     //Velocidade da flecha
     [SerializeField] private float Velocidade;
@@ -23,7 +23,7 @@ public class FlechaController : MonoBehaviour
 
             //cause dano e desaparece
             Vida.setTomouDano(true);
-            Vida.Dano(20);
+            Vida.Dano(50);
 
             if(Vida.getVida() == 0 && collision.gameObject.tag=="Inimigo"){
                 Destroy(collision.gameObject);       
@@ -37,7 +37,7 @@ public class FlechaController : MonoBehaviour
 
     //Ao sair do campo de vis�o de todas as c�meras
     private void OnBecameInvisible(){
-        //Destr�i a flecha
+        //Destr�i o tiro
         Destroy(this.gameObject);
     }
 }

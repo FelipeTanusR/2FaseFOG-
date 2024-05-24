@@ -7,6 +7,8 @@ public class Vida : MonoBehaviour
     [SerializeField] public int _maxHp = 100;
     [SerializeField] private int _Hp;
 
+    [SerializeField] private int pontos;
+
     //Bools para triggers
     private bool tomouDano = false;
     private bool curou = false;
@@ -29,6 +31,10 @@ public class Vida : MonoBehaviour
         curou = status;
     }
 
+    public float getVida(){
+        return _Hp;
+    }
+
     
     
     void Start(){
@@ -46,6 +52,10 @@ public class Vida : MonoBehaviour
     public void IK() =>_Hp = 0;
 
     public void Ajuste(int quantidade) =>_Hp = quantidade;
+
+    public int getPontos(){
+        return pontos;
+    }
 
     
     //verifica qual status invocar com base na mudanca da vida

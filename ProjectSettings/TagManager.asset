@@ -7,6 +7,7 @@ TagManager:
   - Plataforma
   - Controlador
   - Inimigo
+  - CameraPlayer
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Chao
   - Fundo
   - Parede
-  - 
+  - Arma
   - 
   - 
   - 
@@ -41,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Fundo
+    uniqueID: 368012323
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

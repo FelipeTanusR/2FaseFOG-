@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class Movimento : MonoBehaviour
     [SerializeField] TrailRenderer TR;
     [SerializeField] private float CooldownDash = 1f;
     [SerializeField] private float DuracaoDash = 0.3f;
-    [SerializeField] private float ForcaDash = 24f;
+    [SerializeField] private float ForcaDash;
     private Vector2 DirecaoDash;
     private bool isDashing;
     private bool PodeDash;
@@ -33,7 +34,7 @@ public class Movimento : MonoBehaviour
 
     [Header("Wall Slide")]
     private bool isWallSliding;
-    private float wallSlidingSpeed = 2f;
+    private float wallSlidingSpeed = 5f;
 
     [Header("Wall Jump")]
     private bool isWallJumping;
@@ -133,6 +134,9 @@ public class Movimento : MonoBehaviour
     private void FixedUpdate(){
         if (!isWallJumping){
             Corpo.velocity = new Vector2(horizontal * Velocidade, Corpo.velocity.y);
+            if(isDashing){
+                Corpo.velocity = new Vector2(horizontal * ForcaDash, Corpo.velocity.y);
+            }
         }
     }
 
@@ -143,7 +147,7 @@ public class Movimento : MonoBehaviour
         isDashing = true;
         float originalGravity = Corpo.gravityScale;
         Corpo.gravityScale = 0f;
-        Corpo.velocity = new Vector2(transform.localScale.x * ForcaDash, 0f);
+        Corpo.velocity = new Vector2(transform.position.x * ForcaDash, 0f);
         TR.emitting = true;
         yield return new WaitForSeconds(DuracaoDash);
         TR.emitting = false;
@@ -166,7 +170,7 @@ public class Movimento : MonoBehaviour
     }
 
     private bool IsWalled(){
-        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+        return Physics2D.OverlapCircle(wallCheck.position, 1f, wallLayer);
     }
 
     //aleracao de velocidade no wallslide
@@ -228,4 +232,10 @@ public class Movimento : MonoBehaviour
     public Boolean FacingRight(){
         return isFacingRight;
     }
+
+    public Rigidbody2D getCorpo(){
+        return Corpo;
+    }
+    
+    
 }
